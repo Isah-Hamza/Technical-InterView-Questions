@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        //check out Vanhack ( a recomended platform for remote work as alternative to turing.com )
+        console.log('start of script')
+
+        //Question 1
+        // function to search for a missing character in one string
+        //but present in another string....
+        const searchMissingValue = (string1, string2) => {
+            const aArray = string1.split('');
+            const bArray = string2.split('');
+            let missingValue = '';
+    
+            if(aArray.length > bArray.length){
+                for(let i = 0; i<aArray.length; i++){
+                    let found = bArray.indexOf(aArray[i]);
+                    if(found == -1) missingValue = aArray[i]; 
+                }
+            }else{
+                for(let i = 0; i<bArray.length; i++){
+                    let found = aArray.indexOf(bArray[i])
+                    if(found == -1) missingValue = bArray[i]; 
+                }
+            }
+
+            return missingValue
+
+        }
+
+        //Question 2
+        //function to calculate number of pebbles thrown at a wall
+        const pebbles = (firstPick, secondPick, n) => {
+            let first = firstPick;
+            let second = secondPick;
+            let count = n;
+            let sum = 0;
+    
+            for( let i = 0; i<n; i++ ){
+                sum += firstPick + secondPick;
+                firstPick++;
+                secondPick++;
+            }
+            return sum
+        }
+
+        //Question3
+        //Retrieve the repeated number in an array and the missing number
+        // e.g [1,2,3,3,5]; ans = [3,4] meaning 3 is repeated and 4 is missing
+        const findRepeatingAndMissing = (arrayArg) => {
+            const array = arrayArg;
+            let res = [];
+    
+            let min = Number.POSITIVE_INFINITY;
+            let max = Number.NEGATIVE_INFINITY;
+    
+            //get the min and max number
+            for(let i = 0; i<array.length; i++){
+                if(array[i] > max) max = array[i];
+                if(array[i] < min) min = array[i];
+            }
+    
+            //check for equality
+            for(n = 0;n<array.length; n++){
+                for(m = n + 1; m<array.length; m++){
+                    if(array[n] == array[m]){
+                        res.push(array[n]);
+                    }
+                }
+            }
+            
+            //check for missing number
+            for(let i = min; i<=max; i++){
+                let found = array.indexOf(i);
+                if(found == -1){
+                    console.log('not found', i)
+                    res.push(i)
+                }else{
+                    console.log(i, ' found ', i)
+                }
+            }
+
+            if(res.length == 1) res.push(max + 1);
+            
+            console.log('max', max);
+            console.log('min', min);
+
+            return res
+        }
+
+        //Q4. Magic Number.
+        //The number that repeat by itself in an array
+        //eg given [1,2,3,3,3,4,4,5] => return 3 (the magic number)
+        //also if more than one number happen to be the magic number, then return the largest 
+        //if there is no magic number then return -1
+
+        const magicNumber = (arrayArg) => {
+            const array = arrayArg;
+            let res = [];
+            let returnValue = undefined;
+            
+            //check for repeating values
+            for(let i = 0; i<array.length; i++){
+                const counter = array.filter((item) => item == array[i]);
+                if(array[i] == array[i-1]) continue; // to skip the same values from being evaluated
+                if( counter.length == array[i] ){
+                    res.push(array[i])
+                }
+            }
+    
+            if(res.length == 1){
+                returnValue = res[0];
+            }else{
+                let max = Number.NEGATIVE_INFINITY;
+                for(let i = 0; i<res.length; i++){
+                    if(res[i] > max){
+                        max = res[i];
+                    }
+                }
+                returnValue = max;
+            }
+            if(returnValue >= 0 ){
+                return returnValue;
+            }else{
+                return -1;
+            }
+        }
+
+        //Q5.  Basket ball game with strange rules
+        // C - remove the previous element
+        // D - multiply the last element by 2
+        // + - add the two last elements
+        // eg [5,2,C,D,+] = 30
+        const strangeBasketBallRule = (arrayArg) => {
+            const array = arrayArg;
+            let resultArray = [];
+            let sum = 0
+    
+            for(let i=0; i<array.length; i++){
+                if(array[i] == 'C'){
+                    resultArray.pop();
+                }else if(array[i] == 'D'){
+                    resultArray.push(Number(resultArray[resultArray.length - 1]) * 2);
+                }else if(array[i] == '+'){
+                    resultArray.push(Number(resultArray[resultArray.length - 1]) + Number(resultArray[resultArray.length - 2]))
+                }else{
+                    resultArray.push(Number(array[i]))
+                }
+            }
+    
+            for(let j = 0; j<resultArray.length; j++){
+                sum+= resultArray[j]
+            }
+            return sum;
+        }
+
+        //Q6. sum of A[i] + A[j] = S. Where S < K
+        //eg if A = [34, 23, 1, 24, 75, 33, 54, 8]. and K = 60. Output = 58
+        const sumLessThanK = (arrayArg, limitArg) => {
+            const array = arrayArg;
+            const limit = limitArg;
+            let sumArray = [];
+            let max = Number.NEGATIVE_INFINITY;
+    
+            //add each number against theirselves
+            for(let i = 0; i<array.length; i++){
+                for(let j= i+1; j<array.length; j++){
+                    const sum = array[i] + array[j];
+                    if(sum < limit){
+                        sumArray.push(sum);
+                    }
+                }
+            }
+    
+            //check for the maximum sum
+            if(!sumArray.length){
+                max = -1;
+            }else{
+                for(let n=0; n<sumArray.length; n++){
+                    if(sumArray[n] > max){
+                        max = sumArray[n]
+                    }
+                }
+            }
+
+            return  max ;
+        }
+
+        //Q7. Fibunacci
+        //eg the fibunacci sequence goes thus. 0 1 1 2 3 5 
+        //i.e the sixth ittem in the sequence is 5. and so on
+        const fibunacci = (n) => {
+            if(n < 1) return -1;
+            if(n == 1) return 0;
+            if(n <= 3) return 1;
+            return fibunacci(n-1) + fibunacci(n-2);
+        }
+
+        //Q8. Factorial of a number, n
+        //eg 5! = 5 * 4 * 3 * 2 * 1 = 120
+        const factorial = (n) => {
+            if(n < 0) { return -1 };
+            if(n == 0 || n == 1){ return 1 };
+            return factorial(n - 1) * n;
+        }
+
+        //Q9. A string can only consist of { }, ( ), and [ ];
+        //the string is valid if the parenthesis are well paired;
+        const validParenthesis = (s) => {
+            const string = s;
+            stringArray = string.split('');
+            let helperArray = []
+    
+            for (let i = 0; i < stringArray.length; i++) {
+                if(stringArray[i] == '['){
+                    for(let j = i+1; j<stringArray.length; j+= 2){
+                        if(stringArray[j] == ']'){
+                            helperArray.push(stringArray[i]);
+                            helperArray.push(stringArray[j]);
+                            break
+                        }
+                    }
+                }else if(stringArray[i] == '{'){
+                    for(let j = i+1; j<stringArray.length; j+= 2){
+                        if(stringArray[j] == '}'){
+                            helperArray.push(stringArray[i]);
+                            helperArray.push(stringArray[j]);
+                            break
+                        }
+                    }
+                }else if(stringArray[i] == '('){
+                    for(let j = i+1; j<stringArray.length; j+= 2){
+                        if(stringArray[j] == ')'){
+                            helperArray.push(stringArray[i]);
+                            helperArray.push(stringArray[j]);
+                            break
+                        }
+                    }
+                }
+            }
+    
+            if(helperArray.length == stringArray.length) 
+                return true
+            else
+                return false
+        }
+
+
+        //Q10. Given an n pair of parenthesis. Return all valid combinations of the parenthesis
+        //eg. given n = 1 return ['()'];
+        
+        console.log('end of script')
+    </script>
+</body>
+</html>
