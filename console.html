@@ -9,8 +9,132 @@
 <body>
     
     <script>
-        //check out Vanhack ( a recomended platform for remote work as alternative to turing.com )
+
+        const adder = (arr, k) => {
+            
+        }
+
+        function cartesianProduct(arr1, arr2){
+            const firstArr = arr1;
+            const secondArr = arr2;
+            let finalArr = [];
+
+            firstArr.forEach(element1 => {
+                secondArr.forEach(element2 => {
+                    finalArr.push([element1,element2]);
+                });
+            });
+
+            console.log(finalArr)
+        }
+
+        const turingGenerateParenthesis = (n,open,close,s, ans) => {
+            if(open == n && close == n){
+                ans.push(s);
+            }
+            if(open < n){
+                turingGenerateParenthesis(n,open + 1, close, s+"{", ans)
+            }
+            if(close < open){
+                turingGenerateParenthesis(n,open, close + 1, s+"}", ans)
+            }
+        }
+       
+       let ansArr = []
+
+       const caller = (n) => {
+            turingGenerateParenthesis(n,0,0,"",ansArr)
+       }
+
+        console.log('new ans again ', ansArr)
+        //check out Vanhack ( a recomended platform for remote work as alternative to turing.com  )
         console.log('start of script')
+
+        function anagram (string1, string2){
+            string1 = string1.toLowerCase().split("");
+            string1.sort();
+            string2 = string2.toLowerCase().split("");
+            string2.sort();
+
+            let helperArray=[]
+            if(string1.length < string2.length){
+                for(let i =0; i<string1.length; i++){
+                    string1[i] === string2[i] ? helperArray.push(true) : helperArray.push(false);
+                }
+            }else{
+                for(let i =0; i<string2.length; i++){
+                    string2[i] === string1[i] ? helperArray.push(true) : helperArray.push(false);
+                }
+            }
+            return helperArray.every(item => item)
+        }
+        let res = anagram("frame","fame")
+        console.log(res)
+
+        function palindrome(string){
+            let a = Array.from(string);
+            let b = Array.from(string).reverse();
+
+            console.log(a);
+            console.log(b);
+
+            for (let i = 0; i < a.length; i++) {
+                if(a[i] != b[i]){
+                    console.log(string, 'is not palindrome')
+                    return;
+                }
+            }
+            console.log(string, 'is palindrome')
+            
+        }
+
+        // JavaScript program to print all the combinations of balanced parenthesis.
+ 
+// function which generates all possible n pairs of balanced parentheses.
+// open : count of the number of open parentheses used in generating the current string s.
+// close : count of the number of closed parentheses used in generating the current string s.
+// s : currently generated string/
+// ans : an array of strings to store all the valid parentheses.
+function generateParenthesis(n, open, close, s, ans)
+{
+ 
+    // if the count of both open and close parentheses reaches n, it means we have generated a valid parentheses.
+    // So, we add the currently generated string s to the final ans and return.
+    if(open == n && close == n){
+        ans.push(s);
+        return;
+    } 
+     
+    // At any index i in the generation of the string s, we can put an open parentheses only if its count until that time is less than n.
+    if(open < n)
+    {
+        generateParenthesis(n, open + 1, close, s + "{", ans);
+    }
+     
+    // At any index i in the generation of the string s, we can put a closed parentheses only if its count until that time is less than the count of open parentheses.
+    if(close < open)
+    {
+        generateParenthesis(n, open, close + 1, s + "}", ans);
+    }
+       
+}
+ 
+// Driver code
+let n = 2;
+ 
+// array of strings ans is created to store all the possible valid combinations
+// of the parentheses.
+let ans = [];
+console.log('ans is originally', ans)
+ 
+// initially we are passing the counts of open and close as 0,
+// and the string s as an empty string.
+generateParenthesis(n, 0, 0, "", ans);
+ 
+// Now, here we print out all the combinations.
+for(let i = 0; i < ans.length; i++){
+    document.write(ans[i]);
+}
 
         //Question 1
         // function to search for a missing character in one string
@@ -101,7 +225,6 @@
         //eg given [1,2,3,3,3,4,4,5] => return 3 (the magic number)
         //also if more than one number happen to be the magic number, then return the largest 
         //if there is no magic number then return -1
-
         const magicNumber = (arrayArg) => {
             const array = arrayArg;
             let res = [];
