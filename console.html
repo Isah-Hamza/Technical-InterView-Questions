@@ -9,9 +9,50 @@
 <body>
     
     <script>
+        var rotate = function(nums, k) {
+            while (k > 0) { 
+                nums.unshift(nums.pop());
+                k--;
+            }
+}
 
+        // New test 
+        function newTest(a, m){
+            let indeces = [];
+            for(let i = 0; i<m.length; i++){
+                let newA = [...a];
+                for(let j=0; j< m[i]; j++){
+                    newA.push(newA.shift());
+                }
+                indeces.push(newA.indexOf(Math.max(...newA)))
+                console.log(indeces)
+            }
+        }
+
+            function today(arr){
+                let result = [];
+                for(let i=0; i<arr.length; i++){
+                    let multiply = 1;
+                    for (let j = 0; j < arr.length; j++) {
+                        if(i === j) continue
+                        multiply*= arr[j];
+                    }
+                    result.push(multiply)
+                }
+                console.log(result)
+            }
+            today([1,2,3,4,5])
+        // given an array arr, and a value k, check if there are two elements of the array that sums to k. 
         const adder = (arr, k) => {
-            
+            let sumArr = []
+            for (let i = 0; i < arr.length; i++) {
+                for (let j = 0; j < arr.length; j++) {
+                    if(i === j) continue
+                    const sum = arr[i] + arr[j]
+                    sumArr.push(sum)
+                }
+            }
+            return sumArr.indexOf(k) >= 0
         }
 
         function cartesianProduct(arr1, arr2){
@@ -46,7 +87,6 @@
             turingGenerateParenthesis(n,0,0,"",ansArr)
        }
 
-        console.log('new ans again ', ansArr)
         //check out Vanhack ( a recomended platform for remote work as alternative to turing.com  )
         console.log('start of script')
 
@@ -58,7 +98,7 @@
 
             let helperArray=[]
             if(string1.length < string2.length){
-                for(let i =0; i<string1.length; i++){
+                for(let i = 0; i<string1.length; i++){
                     string1[i] === string2[i] ? helperArray.push(true) : helperArray.push(false);
                 }
             }else{
@@ -69,7 +109,35 @@
             return helperArray.every(item => item)
         }
         let res = anagram("frame","fame")
-        console.log(res)
+
+        function hackerRank(string1,string2){
+            string1 = Array.from(string1.toLowerCase());
+            string2 = Array.from(string2.toLowerCase());
+            string1 = string1.sort();
+            string2 = string2.sort();
+
+            console.log(string1);
+            console.log(string2);
+            let missingValue;
+
+            if(string1.length < string2.length){
+                for (let i = 0; i < string1.length; i++) {
+                    let char = string1[i];
+                    charIndex = string2.indexOf(char);
+                    string2.splice(charIndex,1);
+                }
+                console.log(string2[0])
+            }else{
+                for (let i = 0; i < string2.length; i++) {
+                    let char = string2[i];
+                    charIndex = string1.indexOf(char);
+                    string1.splice(charIndex,1);
+                }
+                console.log(string1[0])
+            }
+            
+        }
+        hackerRank("frame", "farm")
 
         function palindrome(string){
             let a = Array.from(string);
