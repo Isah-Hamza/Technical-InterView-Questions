@@ -9,6 +9,26 @@
 <body>
     
     <script>
+
+        function missingLowestPositiveInteger(arr){
+            const lowest = Math.min(...arr);
+            const largest = Math.max(...arr);
+            let missing;
+            for (let i = lowest; i <= largest; i++) {
+                if((arr.indexOf(i) == -1) && (i > 0)){
+                    missing = i;
+                    console.log('missing', missing)
+                    return missing;
+                }                
+            }
+            missing = largest + 1;
+            console.log('missing', missing);
+        }
+
+        missingLowestPositiveInteger([3, 4, -1, 1]);
+        missingLowestPositiveInteger([1, 2, 0]);
+        missingLowestPositiveInteger([-1,1, 2,6,4,3]);
+
         var rotate = function(nums, k) {
             while (k > 0) { 
                 nums.unshift(nums.pop());
@@ -17,6 +37,7 @@
 }
 
         // New test 
+        // But test says 'My program doesn't pass the time test'
         function newTest(a, m){
             let indeces = [];
             for(let i = 0; i<m.length; i++){
