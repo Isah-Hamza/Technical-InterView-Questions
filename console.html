@@ -65,7 +65,7 @@
         console.log(result);
       }
       today([1, 2, 3, 4, 5]);
-     
+
       // given an array arr, and a value k, check if there are two elements of the array that sums to k.
       const adder = (arr, k) => {
         let sumArr = [];
@@ -78,7 +78,6 @@
         }
         return sumArr.indexOf(k) >= 0;
       };
-
 
       function cartesianProduct(arr1, arr2) {
         const firstArr = arr1;
@@ -122,7 +121,7 @@
         string2.sort();
 
         let helperArray = [];
-        
+
         if (string1.length < string2.length) {
           for (let i = 0; i < string1.length; i++) {
             string1[i] === string2[i]
@@ -470,8 +469,12 @@
         if (helperArray.length == stringArray.length) return true;
         else return false;
       };
+
       //Q10. Given an n pair of parenthesis. Return all valid combinations of the parenthesis
       //eg. given n = 1 return ['()'];
+      //Question 10 has been solved above. It is named turingGenerateParenthesis. You can trace it up....
+
+      //   Goodluck in your next interview :(
 
       console.log("end of script");
     </script>
