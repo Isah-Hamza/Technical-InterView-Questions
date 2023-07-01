@@ -8,6 +8,7 @@ var Student = /** @class */ (function () {
     };
     return Student;
 }());
+
 var std1 = new Student(101, 'John Doe');
 std1.displayInfo(); // prints ‘id is 101 and name is John Doe’
 var std2 = new Student('202', 'Bruce Wayne');
