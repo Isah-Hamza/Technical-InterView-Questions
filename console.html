@@ -7,7 +7,7 @@
     <title>Document</title>
   </head>
   <body>
-    <script>
+    <!-- <script>
       function missingLowestPositiveInteger(arr) {
         const lowest = Math.min(...arr);
         const largest = Math.max(...arr);
@@ -482,6 +482,95 @@
       //   Goodluck in your next interview :(
 
       console.log("end of script");
+    </script> -->
+
+    <script>
+      function mergePalindromes(s1, s2) {
+        function isPalindrome(str) {
+          return str === str.split("").reverse().join("");
+        }
+
+        function getCommonChars(str1, str2) {
+          const commonChars = [];
+          const charCount1 = new Map();
+
+          for (const char of str1) {
+            if (charCount1.has(char)) {
+              charCount1.set(char, charCount1.get(char) + 1);
+            } else {
+              charCount1.set(char, 1);
+            }
+          }
+
+          for (const char of str2) {
+            if (charCount1.has(char) && charCount1.get(char) > 0) {
+              commonChars.push(char);
+              charCount1.set(char, charCount1.get(char) - 1);
+            }
+          }
+
+          return commonChars;
+        }
+
+        const palindromes1 = [];
+        const palindromes2 = [];
+
+        function generatePalindromes(combination, remainingChars, target) {
+          if (remainingChars.length === 0) {
+            if (isPalindrome(combination)) {
+              target.push(combination);
+            }
+            return;
+          }
+
+          for (let i = 0; i < remainingChars.length; i++) {
+            const char = remainingChars[i];
+            const newCombination = combination + char;
+            const newRemainingChars =
+              remainingChars.slice(0, i) + remainingChars.slice(i + 1);
+            generatePalindromes(newCombination, newRemainingChars, target);
+          }
+        }
+
+        generatePalindromes("", s1, palindromes1);
+        generatePalindromes("", s2, palindromes2);
+
+        let maxLen1 = 0;
+        let maxLen2 = 0;
+
+        for (const palindrome of palindromes1) {
+          maxLen1 = Math.max(maxLen1, palindrome.length);
+        }
+
+        for (const palindrome of palindromes2) {
+          maxLen2 = Math.max(maxLen2, palindrome.length);
+        }
+
+        let mergedPalindrome = "";
+
+        for (const palindrome1 of palindromes1) {
+          for (const palindrome2 of palindromes2) {
+            if (
+              palindrome1.length === maxLen1 &&
+              palindrome2.length === maxLen2
+            ) {
+              const commonChars = getCommonChars(palindrome1, palindrome2);
+              const merged = palindrome1 + commonChars.join("") + palindrome2;
+              if (mergedPalindrome === "" || merged < mergedPalindrome) {
+                mergedPalindrome = merged;
+              }
+            }
+          }
+        }
+
+        return mergedPalindrome;
+      }
+
+      const s1 = "aabbc";
+      const s2 = "ddefefq";
+
+      const mergedPalindrome = mergePalindromes(s1, s2);
+      console.log(mergedPalindrome); // Output: 'abdefcfedba'
     </script>
   </body>
 </html>
